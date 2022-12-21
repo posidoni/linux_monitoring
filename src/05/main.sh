@@ -83,10 +83,8 @@ get_top_executables() {
 # $1 - in dir
 # $2 - amount
 get_top_files() {
-	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null # do not display broken pipes msgs
-		\ | paste - - # strip newlines
-		\ | awk \
-		'function maximize_bytes(bytes) {
+	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null | paste - - \ | awk '
+	function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
 				if (int(gbytes) > 0) {
@@ -164,4 +162,9 @@ get_info() {
 	END
 }
 
-[[ $# == 1 ]] && is_absolute_path "$1" && get_info "$1"
+if ! [[ $# == 1 ]]; then
+	echo "Usage: $0 <absolut_path_to_dir>"
+	exit 1
+fi
+
+is_absolute_path "$1" && get_info "$1"
