@@ -37,7 +37,7 @@ The file name must looks like: **DD_MM_YY_HH_MM_SS.status** (The time in the fil
 
 ## 03. Visual output design for the system research script
 
-Write a bash script. Use the script from [**Part 2**](#part-2-system-research) and remove the part where the data is saved to a file.  The script is run with 4 parameters. The parameters are numeric. From 1 to 6, for example:  
+Write a bash script. Use the script from **Part 2** and remove the part where the data is saved to a file.  The script is run with 4 parameters. The parameters are numeric. From 1 to 6, for example:  
 `script03.sh 1 3 4 5`
 
 Colour designations: (1 - white, 2 - red, 3 - green, 4 - blue, 5 - purple, 6 - black)
@@ -53,7 +53,7 @@ After the message output, the program should exit correctly.
 
 ## 04. Configuring visual output design for the system research script
 
-Write a bash script. Use the script from [**Part 3**](#part-3-visual-output-design-for-the-system-research-script). The colour designations are similar. The script runs without parameters. The parameters are set in the configuration file before the script is running.
+Write a bash script. Use the script from **Part 3**. The colour designations are similar. The script runs without parameters. The parameters are set in the configuration file before the script is running.
 
 This is how the configuration file must look like:
 ```
@@ -66,7 +66,7 @@ column2_font_color=1
 If one or more parameters are not set in the configuration file, the colour must be substituted from the default colour scheme. (Choice is at the developer's discretion).
 
 
-After the system information output from [**Part 3**](#part-3-visual-output-design-for-the-system-research-script), you should output the colour scheme by indenting one empty line as follows:
+After the system information output from **Part 3**, you should output the colour scheme by indenting one empty line as follows:
 ```
 Column 1 background = 2 (red)
 Column 1 font color = 4 (blue)
