@@ -26,26 +26,11 @@ is_absolute_path() {
 # $2 - amount of largest
 # $3 - filter args
 get_top_largest_dirs_in_dir() {
-	du "$1" -bb | sort -t\  -nk1 -r | awk '
-		function maximize_bytes(bytes) {
-			kbytes = bytes/1024
-			if (int(kbytes) > 0) {
-				if (int(gbytes) > 0) {
-					tbytes = gbytes / 1024
-					if (int(tbytes) > 0) {
-						return sprintf("%d Tbytes", tbytes)
-					}
-					return sprintf("%d Gbytes", gbytes)
-				}
-				return sprintf("%d KBytes", kbytes)
-			}
-			return sprintf("%d Bytes", bytes)
-		}
-
+	du "$1" -h | sort -t\  -nk1 -r | awk '
 		{
 			if (NR>1) { # if this is not the first match (the directory itself)
 				i++;
-				printf("%d - %s %s\n"), i, $2, maximize_bytes($1)
+				printf("%d - %s %s\n"), i, $2, $1
 			}
 		}
 	' | column -t | head -"$2"
@@ -54,7 +39,7 @@ get_top_largest_dirs_in_dir() {
 # $1 - in dir
 # $2 - amount
 get_top_executables() {
-	find "$1" -type f -ls -exec md5sum {} \; 2>/dev/null | paste - - | awk '
+	find "$1" -type f -executable -ls -exec md5sum {} \; 2>/dev/null | paste - - | awk '
 		function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
@@ -72,7 +57,7 @@ get_top_executables() {
 
 		{
 			j++;
-			printf("%d - %s, %s, %s\n", j, $11, maximize_bytes($1), $12)
+			printf("%d - %s, %s, %s\n", j, $11, maximize_bytes($2), $12)
 		}
 	' | head -"$3"
 }
@@ -80,7 +65,7 @@ get_top_executables() {
 # $1 - in dir
 # $2 - amount
 get_top_files() {
-	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null | paste - - \ | awk '
+	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null | paste - -  | awk '
 	function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
@@ -98,7 +83,7 @@ get_top_files() {
 
 		{
 			j++;
-			res = sprintf("%d - %s, %s", j, $11, maximize_bytes($1))
+			res = sprintf("%d - %s, %s", j, $11, maximize_bytes($2))
 			for (i = 12; i <= NF; i++) { # Append rest of the line in varargs fashion
 				res = res " " $i
 			}
