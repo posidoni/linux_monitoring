@@ -57,7 +57,7 @@ get_top_largest_dirs_in_dir() {
 # $1 - in dir
 # $2 - amount
 get_top_executables() {
-	find "$1" -type f -ls -exec md5sum {} \; | paste - - | awk '
+	find "$1" -type f -ls -exec md5sum {} \; 2>/dev/null | paste - - | awk '
 		function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
@@ -83,8 +83,10 @@ get_top_executables() {
 # $1 - in dir
 # $2 - amount
 get_top_files() {
-	find "$1" -type f -ls -exec file -b {} \; | paste - - | awk '
-		function maximize_bytes(bytes) {
+	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null # do not display broken pipes msgs
+		\ | paste - - # strip newlines
+		\ | awk \
+		'function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
 				if (int(gbytes) > 0) {
@@ -102,7 +104,7 @@ get_top_files() {
 		{
 			j++;
 			res = sprintf("%d - %s, %s", j, $11, maximize_bytes($1))
-			for (i = 12; i <= NF; i++) {
+			for (i = 12; i <= NF; i++) { # Append rest of the line in varargs fashion
 				res = res " " $i
 			}
 			print res

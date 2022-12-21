@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ../tests/assert.sh
-# side effect: when the file is sources, it is executed
 source main.sh
 
 assertScript 1 "$ERR" "$(./main.sh 1)"
