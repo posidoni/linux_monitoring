@@ -27,6 +27,10 @@ declare -A bg_col=(
 
 # $1 - number to validate
 validate_number() {
+	if [[ ! "$1" =~ ^[1-6]$ ]]; then
+		2>&1 echo "Error. Invalid argument provided. Expected number in range 1..6"
+		return 1
+	fi
 	if [[ "$1" -le 0 || "$1" -gt 6 ]]; then
 		2>&1 echo "Error: color number $1 is out of range. Allowed color codes: 1..6"
 		return 1
