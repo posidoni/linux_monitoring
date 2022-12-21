@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source ../02/lib.sh || (2>&1 echo "Library not found. Are you running script in correct location?" && exit 1)
+if ! source ../02/lib.sh; then
+	2>&1 echo "Library not found. Are you running script in correct location?"
+	exit 1
+fi
 
 declare -A font_col=(
 	[0]="\033[0m" # clear color
