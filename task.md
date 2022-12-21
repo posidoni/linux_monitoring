@@ -1,21 +1,14 @@
+# Linux Monitoring v1.0
 
-<h1 align="center">Linux Bash Scripting</h1>
-<p align="center"><strong>Collection of useful shell bash scripts</strong>
-<br/>
-<h2>About</h2>
-In this project I implemented 4 mid-size shell scripts that report various
-useful information about Linux system. I used only vanilla POSIX compliant
-programs and bash shell.
+Linux basic bash scripting and system research.
 
-<h2>Key learnings</h2>
+## 01. Warm-up
 
-- AWK advanced scripting
-- Bash advanced pipes usage
-- Linux system research
-- Key programs: `find`, `awk`, `grep`
-- Key Bash concepts: `heredoc`, `process substitution`
+Write a bash script. The script is run with one parameter. It is a text parameter.  
+The script outputs the value of the parameter.  
+If the parameter is a number, the script must output an invalid input message.
 
-## 01. System research
+## 02. System research
 
 Write a bash script. The script should output the following information:
 
@@ -42,7 +35,7 @@ Responses **Y** and **y** are considered positive, all others - negative.
 If the user agrees, create a file in the current directory containing the information that had been outputted.
 The file name must looks like: **DD_MM_YY_HH_MM_SS.status** (The time in the file name must indicate when the data was saved).
 
-## 02. Visual output design for the system research script
+## 03. Visual output design for the system research script
 
 Write a bash script. Use the script from **Part 2** and remove the part where the data is saved to a file.  The script is run with 4 parameters. The parameters are numeric. From 1 to 6, for example:  
 `script03.sh 1 3 4 5`
@@ -58,7 +51,7 @@ The font and background colours of one column must not match.
 If matching values are entered, there must be a message describing the problem and offering to call the script again.
 After the message output, the program should exit correctly.
 
-## 03. Configuring visual output design for the system research script
+## 04. Configuring visual output design for the system research script
 
 Write a bash script. Use the script from **Part 3**. The colour designations are similar. The script runs without parameters. The parameters are set in the configuration file before the script is running.
 
@@ -89,7 +82,7 @@ Column 2 background = default (red)
 Column 2 font color = default (blue)
 ```
 
-## 04. File system research
+## 05. File system research
 
 Write a bash script. The script is run with a single parameter.  
 The parameter is an absolute or relative path to a directory. The parameter must end with '/', for example:  
@@ -130,7 +123,3 @@ TOP 10 executable files of the maximum size arranged in descending order (path, 
 etc up to 10  
 Script execution time (in seconds) = 1.5
 ```
-
-<h2>Credits</h2>
-
-- Tasks: <a href="21-school.ru" target="_blank">School 21</a>
