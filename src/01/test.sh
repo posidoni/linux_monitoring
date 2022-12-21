@@ -1,7 +1,9 @@
 #!/bin/bash
 
-source ../tests/assert.sh
-source main.sh
+if ! source ../tests/assert.sh || ! source main.sh; then
+	2>&1 echo "Libraries not found. Are you running script from correct location?"
+	exit 1
+fi
 
 assertScript 1 "$ERR" "$(./main.sh 1)"
 assertScript 2 "$ERR" "$(./main.sh 0001)"
