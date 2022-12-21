@@ -39,7 +39,7 @@ get_top_largest_dirs_in_dir() {
 # $1 - in dir
 # $2 - amount
 get_top_executables() {
-	find "$1" -type f -executable -ls -exec md5sum {} \; 2>/dev/null | paste - - | awk '
+	find "$1" -type f -executable -ls -exec md5sum {} \; 2>/dev/null | paste - - | sort -t\  -nk7 -r | awk '
 		function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
@@ -57,7 +57,7 @@ get_top_executables() {
 
 		{
 			j++;
-			printf("%d - %s, %s, %s\n", j, $11, maximize_bytes($2), $12)
+			printf("%d - %s, %s, %s\n", j, $11, maximize_bytes($7), $12)
 		}
 	' | head -"$3"
 }
@@ -65,7 +65,7 @@ get_top_executables() {
 # $1 - in dir
 # $2 - amount
 get_top_files() {
-	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null | paste - -  | awk '
+	find "$1" -type f -ls -exec file -b {} \; 2> /dev/null | paste - - | sort -t\  -nk7 -r | awk '
 	function maximize_bytes(bytes) {
 			kbytes = bytes/1024
 			if (int(kbytes) > 0) {
@@ -83,7 +83,7 @@ get_top_files() {
 
 		{
 			j++;
-			res = sprintf("%d - %s, %s", j, $11, maximize_bytes($2))
+			res = sprintf("%d - %s, %s", j, $11, maximize_bytes($7))
 			for (i = 12; i <= NF; i++) { # Append rest of the line in varargs fashion
 				res = res " " $i
 			}
@@ -110,7 +110,7 @@ get_info() {
 
 	# Text file is quite ambigious term. I use 'file' to determine format
 	txt_files="$(echo "$_files" | xargs -I _ file _ | awk '/text/' | wc -l)"
-	ar_files="$(echo "$_files" || xargs -I _ file _ | awk '/compressed|archive/' | wc -l)"
+	ar_files="$(echo "$_files" | xargs -I _ file _ | awk '/compressed|archive/' | wc -l)"
 
 	end=$(date +%s.%N)
 
