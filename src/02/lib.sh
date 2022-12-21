@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function collect_sys_info() {
+collect_sys_info() {
 	hostname="$(hostname)"
 	timezone="$(date +"$(head /etc/timezone) UTC %Z")"
 	user="$(whoami)"

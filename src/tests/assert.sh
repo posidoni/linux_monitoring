@@ -3,7 +3,7 @@
 # $1 - test N
 # $2 - expected
 # $3 - program output
-function assertScript() {
+assertScript() {
 	if [[ -z "$3" ]] || [[ "$2" != "$3" ]]; then
 		echo -e "Error, got $2, expected $3\n"
 	else
