@@ -2,9 +2,6 @@
 
 # $1 - absolute path to directory
 is_absolute_path() {
-
-	echo "$1"
-
 	# https://regex101.com/r/JTV4Xm/1
 	if ! [[ "$1" =~ ^\/.* ]]; then
 		2>&1 echo "Error: path does not start with '/', so it is no absolute"
@@ -12,7 +9,7 @@ is_absolute_path() {
 	fi
 
 	# https://regex101.com/r/WBHJnU/1
-	if ! [[ "$1" =~ .*\/ ]]; then
+	if ! [[ "$1" =~ .*\/$ ]]; then
 		2>&1 echo "Error: provided path does not end with '/'"
 		return 1
 	fi
