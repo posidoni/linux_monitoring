@@ -99,25 +99,18 @@ get_info() {
 	_dirs="$(find "$1" -mindepth 1 -type d)"
 	_files=$(find "$1" -type f)
 
-	total_dirs=$(wc -l <<-EOF # looks very ugly, but this is actually 'correct' way without one more echo
-		$_dirs
-	EOF
-	)
-
-	total_files=$(wc -l <<-EOF
-		$_files
-	EOF
-	)
-
-	conf_files="$(find "$1" -type f -name "*.conf" | wc -l)"
-	log_files="$(find "$1" -type f -name "*.log" | wc -l)"
+	# Echo + pipes is faster than heredoc
+	total_dirs=$(echo "$_dirs" | wc -l)
+	total_files="$(echo "$_files" | wc -l)"
+	conf_files="$(echo "$_files" | grep -e ".conf$" -c)"
+	log_files="$(echo "$_files" | grep -e ".log$" -c)"
 
 	sym_links="$(find "$1" -type l | wc -l)"
 	exe_files="$(find "$1" -type f -executable | wc -l)"
 
-	# Text file is quite ambigious term.
-	txt_files="$(find "$1" -type f -exec file {} \; | awk '/text/' | wc -l)"
-	ar_files="$(find "$1" -type f -exec file {} \; | awk '/compressed|archive/' | wc -l)"
+	# Text file is quite ambigious term. I use 'file' to determine format
+	txt_files="$(echo "$_files" | xargs -I _ file _ | awk '/text/' | wc -l)"
+	ar_files="$(echo "$_files" || xargs -I _ file _ | awk '/compressed|archive/' | wc -l)"
 
 	end=$(date +%s.%N)
 
