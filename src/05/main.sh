@@ -117,7 +117,7 @@ get_info() {
 	time=$(echo "$end - $start" | bc)
 
 	cat <<-END
-	Total 
+	Total
 	Total number of folders (including all nested ones) = $total_dirs
 	TOP 5 folders of maximum size arranged in descending order (path and size):
 	$(get_top_largest_dirs_in_dir "$1" 5)
